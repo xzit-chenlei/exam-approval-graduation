@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.xzit.core.dao.mapper.FlowDeployMapper">
+    
+
+    <select id="selectDeployList" resultType="edu.xzit.core.dao.domain.FlowProcDefDto">
+
+        SELECT
+            rp.id_ as id,
+            rp.deployment_id_ as deploymentId,
+            rd.name_ as name,
+            rd.category_ as category,
+            rp.key_ as flowKey,
+            rp.version_ as version,
+            rp.suspension_state_ as suspensionState,
+            rd.deploy_time_  as deploymentTime
+        FROM
+            ACT_RE_PROCDEF rp
+                LEFT JOIN  ACT_RE_DEPLOYMENT rd ON rp.deployment_id_ = rd.id_
+                JOIN (select KEY_ , MAX(VERSION_) as version from ACT_RE_PROCDEF group by KEY_) as t
+                ON rp.KEY_ = t.KEY_ AND rp.VERSION_ = t.VERSION
+        <where>
+            <if test="name != null and name != ''">
+               and rd.name_ like concat('%', #{name}, '%')
+            </if>
+        </where>
+        order by rd.deploy_time_ desc
+    </select>
+
+    <select id="selectDeployListNonFuzzy" resultType="edu.xzit.core.dao.domain.FlowProcDefDto">
+
+        SELECT
+        rp.id_ as id,
+        rp.deployment_id_ as deploymentId,
+        rd.name_ as name,
+        rd.category_ as category,
+        rp.key_ as flowKey,
+        rp.version_ as version,
+        rp.suspension_state_ as suspensionState,
+        rd.deploy_time_  as deploymentTime
+        FROM
+        ACT_RE_PROCDEF rp
+        LEFT JOIN ACT_RE_DEPLOYMENT rd ON rp.deployment_id_ = rd.id_
+        <where>
+            <if test="key != null and key != ''">
+                and rp.KEY_ = #{key}
+            </if>
+        </where>
+        order by rd.deploy_time_ desc
+    </select>
+
+    <select id="selectDeployIdByDeployName" resultType="String">
+        select id_ from ACT_RE_DEPLOYMENT where name_ = #{name} order by ID_ desc limit 1
+    </select>
+
+    <select id="selectDeployIdByDeployKey" resultType="String">
+        select DEPLOYMENT_ID_ from ACT_RE_PROCDEF where KEY_ = #{key} order by VERSION_ desc limit 1
+    </select>
+
+
+</mapper>

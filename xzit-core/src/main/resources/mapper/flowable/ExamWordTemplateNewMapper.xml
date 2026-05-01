@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.xzit.core.core.flowable.mapper.ExamWordTemplateNewMapper">
+
+    <resultMap type="ExamWordTemplateNew" id="ExamWordTemplateNewResult">
+        <result property="id" column="id"/>
+        <result property="templateName" column="template_name"/>
+        <result property="templateKey" column="template_key"/>
+        <result property="flowableKey" column="flowable_key"/>
+        <result property="description" column="description"/>
+        <result property="rowCount" column="row_count"/>
+        <result property="columnCount" column="column_count"/>
+        <result property="version" column="version"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="isValid" column="is_valid"/>
+    </resultMap>
+
+    <sql id="selectExamWordTemplateNewVo">
+        select id, template_name, template_key, flowable_key, description, row_count, column_count, version, create_by, create_time, update_by, update_time, is_valid
+        from exam_word_template_new
+    </sql>
+
+    <select id="selectExamWordTemplateNewList" parameterType="ExamWordTemplateNew" resultMap="ExamWordTemplateNewResult">
+        <include refid="selectExamWordTemplateNewVo"/>
+        <where>
+            <if test="templateName != null and templateName != ''">
+                and template_name like concat('%', #{templateName}, '%')
+            </if>
+            <if test="templateKey != null and templateKey != ''">
+                and template_key like concat('%', #{templateKey}, '%')
+            </if>
+            <if test="flowableKey != null and flowableKey != ''">
+                and flowable_key like concat('%', #{flowableKey}, '%')
+            </if>
+            <if test="description != null and description != ''">
+                and description like concat('%', #{description}, '%')
+            </if>
+            <if test="rowCount != null">
+                and row_count = #{rowCount}
+            </if>
+            <if test="columnCount != null">
+                and column_count = #{columnCount}
+            </if>
+            <if test="version != null and version != ''">
+                and version = #{version}
+            </if>
+            and is_valid = 0
+        </where>
+    </select>
+
+    <select id="selectExamWordTemplateNewById" parameterType="Long"
+            resultMap="ExamWordTemplateNewResult">
+        <include refid="selectExamWordTemplateNewVo"/>
+        where id = #{id} and is_valid = 0
+    </select>
+
+    <insert id="insertExamWordTemplateNew" parameterType="ExamWordTemplateNew" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into exam_word_template_new
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="templateName != null">template_name,</if>
+            <if test="templateKey != null">template_key,</if>
+            <if test="flowableKey != null">flowable_key,</if>
+            <if test="description != null">description,</if>
+            <if test="rowCount != null">row_count,</if>
+            <if test="columnCount != null">column_count,</if>
+            <if test="version != null">version,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="isValid != null">is_valid,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="templateName != null">#{templateName},</if>
+            <if test="templateKey != null">#{templateKey},</if>
+            <if test="flowableKey != null">#{flowableKey},</if>
+            <if test="description != null">#{description},</if>
+            <if test="rowCount != null">#{rowCount},</if>
+            <if test="columnCount != null">#{columnCount},</if>
+            <if test="version != null">#{version},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="isValid != null">#{isValid},</if>
+        </trim>
+    </insert>
+
+    <update id="updateExamWordTemplateNew" parameterType="ExamWordTemplateNew">
+        update exam_word_template_new
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="templateName != null">template_name = #{templateName},</if>
+            <if test="templateKey != null">template_key = #{templateKey},</if>
+            <if test="flowableKey != null">flowable_key = #{flowableKey},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="rowCount != null">row_count = #{rowCount},</if>
+            <if test="columnCount != null">column_count = #{columnCount},</if>
+            <if test="version != null">version = #{version},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="isValid != null">is_valid = #{isValid},</if>
+        </trim>
+        where id = #{id} and is_valid = 0
+    </update>
+
+    <delete id="deleteExamWordTemplateNewById" parameterType="Long">
+        update exam_word_template_new set is_valid = 1 where id = #{id}
+    </delete>
+
+    <delete id="deleteExamWordTemplateNewByIds" parameterType="String">
+        delete from exam_word_template_new where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
+
+
+
+
+
+
+
+
+

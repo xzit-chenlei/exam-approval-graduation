@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.xzit.core.dao.mapper.ExamTutorialStatisticMapper">
+
+    <resultMap type="ExamTutorialStatistic" id="ExamTutorialStatisticResult">
+            <result property="id" column="id"/>
+            <result property="teacher" column="teacher"/>
+            <result property="course" column="course"/>
+            <result property="tutorialTime" column="tutorial_time"/>
+            <result property="tutorialLocation" column="tutorial_location"/>
+            <result property="tutorialClass" column="tutorial_class"/>
+            <result property="remark" column="remark"/>
+            <result property="createBy" column="create_by"/>
+            <result property="createTime" column="create_time"/>
+            <result property="updateBy" column="update_by"/>
+            <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectExamTutorialStatisticVo">
+        select id, teacher, course, tutorial_time, tutorial_location, tutorial_class, remark, create_by, create_time, update_by, update_time
+        from exam_tutorial_statistic
+    </sql>
+
+    <select id="selectExamTutorialStatisticList" parameterType="ExamTutorialStatistic" resultMap="ExamTutorialStatisticResult">
+        <include refid="selectExamTutorialStatisticVo"/>
+        <where>
+                        <if test="teacher != null  and teacher != ''">
+                            and teacher = #{teacher}
+                        </if>
+                        <if test="course != null  and course != ''">
+                            and course = #{course}
+                        </if>
+                        <if test="tutorialTime != null ">
+                            and tutorial_time = #{tutorialTime}
+                        </if>
+                        <if test="tutorialLocation != null  and tutorialLocation != ''">
+                            and tutorial_location = #{tutorialLocation}
+                        </if>
+                        <if test="tutorialClass != null  and tutorialClass != ''">
+                            and tutorial_class = #{tutorialClass}
+                        </if>
+                        <if test="remark != null  and remark != ''">
+                            and remark = #{remark}
+                        </if>
+            and is_valid = 0
+        </where>
+    </select>
+
+    <select id="selectExamTutorialStatisticById" parameterType="Long"
+            resultMap="ExamTutorialStatisticResult">
+            <include refid="selectExamTutorialStatisticVo"/>
+            where id = #{id} and is_valid = 0
+    </select>
+
+    <insert id="insertExamTutorialStatistic" parameterType="ExamTutorialStatistic" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into exam_tutorial_statistic
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="teacher != null">teacher,
+                    </if>
+                    <if test="course != null">course,
+                    </if>
+                    <if test="tutorialTime != null">tutorial_time,
+                    </if>
+                    <if test="tutorialLocation != null">tutorial_location,
+                    </if>
+                    <if test="tutorialClass != null">tutorial_class,
+                    </if>
+                    <if test="remark != null">remark,
+                    </if>
+                    <if test="createBy != null">create_by,
+                    </if>
+                    <if test="createTime != null">create_time,
+                    </if>
+                    <if test="updateBy != null">update_by,
+                    </if>
+                    <if test="updateTime != null">update_time,
+                    </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="teacher != null">#{teacher},
+                    </if>
+                    <if test="course != null">#{course},
+                    </if>
+                    <if test="tutorialTime != null">#{tutorialTime},
+                    </if>
+                    <if test="tutorialLocation != null">#{tutorialLocation},
+                    </if>
+                    <if test="tutorialClass != null">#{tutorialClass},
+                    </if>
+                    <if test="remark != null">#{remark},
+                    </if>
+                    <if test="createBy != null">#{createBy},
+                    </if>
+                    <if test="createTime != null">#{createTime},
+                    </if>
+                    <if test="updateBy != null">#{updateBy},
+                    </if>
+                    <if test="updateTime != null">#{updateTime},
+                    </if>
+        </trim>
+    </insert>
+
+    <update id="updateExamTutorialStatistic" parameterType="ExamTutorialStatistic">
+        update exam_tutorial_statistic
+        <trim prefix="SET" suffixOverrides=",">
+                    <if test="teacher != null">teacher =
+                        #{teacher},
+                    </if>
+                    <if test="course != null">course =
+                        #{course},
+                    </if>
+                    <if test="tutorialTime != null">tutorial_time =
+                        #{tutorialTime},
+                    </if>
+                    <if test="tutorialLocation != null">tutorial_location =
+                        #{tutorialLocation},
+                    </if>
+                    <if test="tutorialClass != null">tutorial_class =
+                        #{tutorialClass},
+                    </if>
+                    <if test="remark != null">remark =
+                        #{remark},
+                    </if>
+                    <if test="createBy != null">create_by =
+                        #{createBy},
+                    </if>
+                    <if test="createTime != null">create_time =
+                        #{createTime},
+                    </if>
+                    <if test="updateBy != null">update_by =
+                        #{updateBy},
+                    </if>
+                    <if test="updateTime != null">update_time =
+                        #{updateTime},
+                    </if>
+        </trim>
+        where id = #{id} and is_valid = 0
+    </update>
+
+    <delete id="deleteExamTutorialStatisticById" parameterType="Long">
+        update exam_tutorial_statistic set `is_valid` = 1 where id = #{id}
+    </delete>
+
+    <delete id="deleteExamTutorialStatisticByIds" parameterType="String">
+        delete from exam_tutorial_statistic where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

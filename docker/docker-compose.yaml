@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  app:
+    container_name: xzit-server
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 4096M
+        reservations:
+          memory: 2048M
+    build:
+      context: ./back
+      dockerfile: Dockerfile
+    image: lws:${TIMESTAMP}
+    ports:
+      - "8089:8089"  # 将主机的8080端口映射到容器的8080端口（如果应用程序监听了8080端口）
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - TZ=Asia/Shanghai
+    volumes:
+      - /root/lws/back:/home/work
+    command:
+      - /bin/sh
+      - -c
+      - java -jar $JAX_JAVA_OPTS -Dspring.config.location=classpath:/application.yml,file:///home/work/application-prod.yml -Dspring.profiles.active=prod -Dlogging.config=/home/work/logback-prod.xml /app.jar

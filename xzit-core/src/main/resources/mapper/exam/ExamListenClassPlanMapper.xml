@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.xzit.core.dao.mapper.ExamListenClassPlanMapper">
+
+    <resultMap type="ExamListenClassPlan" id="ExamListenClassPlanResult">
+            <result property="id" column="id"/>
+            <result property="listeningTeacher" column="listening_teacher"/>
+            <result property="listenedTeacher" column="listened_teacher"/>
+            <result property="course" column="course"/>
+            <result property="listenClass" column="listen_class"/>
+            <result property="listenTime" column="listen_time"/>
+            <result property="listenLocation" column="listen_location"/>
+            <result property="remark" column="remark"/>
+            <result property="createTime" column="create_time"/>
+            <result property="createBy" column="create_by"/>
+            <result property="updateTime" column="update_time"/>
+            <result property="updateBy" column="update_by"/>
+    </resultMap>
+
+    <sql id="selectExamListenClassPlanVo">
+        select id, listening_teacher, listened_teacher, course, listen_class, listen_time, listen_location, remark, create_time, create_by, update_time, update_by
+        from exam_listen_class_plan
+    </sql>
+
+    <select id="selectExamListenClassPlanList" parameterType="ExamListenClassPlan" resultMap="ExamListenClassPlanResult">
+        <include refid="selectExamListenClassPlanVo"/>
+        <where>
+                        <if test="listeningTeacher != null  and listeningTeacher != ''">
+                            and listening_teacher = #{listeningTeacher}
+                        </if>
+                        <if test="listenedTeacher != null  and listenedTeacher != ''">
+                            and listened_teacher = #{listenedTeacher}
+                        </if>
+                        <if test="course != null  and course != ''">
+                            and course = #{course}
+                        </if>
+                        <if test="listenClass != null  and listenClass != ''">
+                            and listen_class = #{listenClass}
+                        </if>
+                        <if test="listenTime != null ">
+                            and listen_time = #{listenTime}
+                        </if>
+                        <if test="listenLocation != null  and listenLocation != ''">
+                            and listen_location = #{listenLocation}
+                        </if>
+                        <if test="remark != null  and remark != ''">
+                            and remark = #{remark}
+                        </if>
+            and is_valid = 0
+        </where>
+    </select>
+
+    <select id="selectExamListenClassPlanById" parameterType="Long"
+            resultMap="ExamListenClassPlanResult">
+            <include refid="selectExamListenClassPlanVo"/>
+            where id = #{id} and is_valid = 0
+    </select>
+
+    <insert id="insertExamListenClassPlan" parameterType="ExamListenClassPlan" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into exam_listen_class_plan
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="listeningTeacher != null">listening_teacher,
+                    </if>
+                    <if test="listenedTeacher != null">listened_teacher,
+                    </if>
+                    <if test="course != null">course,
+                    </if>
+                    <if test="listenClass != null">listen_class,
+                    </if>
+                    <if test="listenTime != null">listen_time,
+                    </if>
+                    <if test="listenLocation != null">listen_location,
+                    </if>
+                    <if test="remark != null">remark,
+                    </if>
+                    <if test="createTime != null">create_time,
+                    </if>
+                    <if test="createBy != null">create_by,
+                    </if>
+                    <if test="updateTime != null">update_time,
+                    </if>
+                    <if test="updateBy != null">update_by,
+                    </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="listeningTeacher != null">#{listeningTeacher},
+                    </if>
+                    <if test="listenedTeacher != null">#{listenedTeacher},
+                    </if>
+                    <if test="course != null">#{course},
+                    </if>
+                    <if test="listenClass != null">#{listenClass},
+                    </if>
+                    <if test="listenTime != null">#{listenTime},
+                    </if>
+                    <if test="listenLocation != null">#{listenLocation},
+                    </if>
+                    <if test="remark != null">#{remark},
+                    </if>
+                    <if test="createTime != null">#{createTime},
+                    </if>
+                    <if test="createBy != null">#{createBy},
+                    </if>
+                    <if test="updateTime != null">#{updateTime},
+                    </if>
+                    <if test="updateBy != null">#{updateBy},
+                    </if>
+        </trim>
+    </insert>
+
+    <update id="updateExamListenClassPlan" parameterType="ExamListenClassPlan">
+        update exam_listen_class_plan
+        <trim prefix="SET" suffixOverrides=",">
+                    <if test="listeningTeacher != null">listening_teacher =
+                        #{listeningTeacher},
+                    </if>
+                    <if test="listenedTeacher != null">listened_teacher =
+                        #{listenedTeacher},
+                    </if>
+                    <if test="course != null">course =
+                        #{course},
+                    </if>
+                    <if test="listenClass != null">listen_class =
+                        #{listenClass},
+                    </if>
+                    <if test="listenTime != null">listen_time =
+                        #{listenTime},
+                    </if>
+                    <if test="listenLocation != null">listen_location =
+                        #{listenLocation},
+                    </if>
+                    <if test="remark != null">remark =
+                        #{remark},
+                    </if>
+                    <if test="createTime != null">create_time =
+                        #{createTime},
+                    </if>
+                    <if test="createBy != null">create_by =
+                        #{createBy},
+                    </if>
+                    <if test="updateTime != null">update_time =
+                        #{updateTime},
+                    </if>
+                    <if test="updateBy != null">update_by =
+                        #{updateBy},
+                    </if>
+        </trim>
+        where id = #{id} and is_valid = 0
+    </update>
+
+    <delete id="deleteExamListenClassPlanById" parameterType="Long">
+        update exam_listen_class_plan set `is_valid` = 1 where id = #{id}
+    </delete>
+
+    <delete id="deleteExamListenClassPlanByIds" parameterType="String">
+        delete from exam_listen_class_plan where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.xzit.core.core.flowable.mapper.ExamWordTemplateInfoMapper">
+
+    <resultMap type="ExamWordTemplateInfo" id="ExamWordTemplateInfoResult">
+            <result property="id" column="id"/>
+            <result property="formId" column="form_id"/>
+            <result property="formName" column="form_name"/>
+            <result property="storeInfoId" column="store_info_id"/>
+            <result property="wordTemplateName" column="word_template_name"/>
+            <result property="wordTemplateType" column="word_template_type"/>
+            <result property="correspondingFileLabel" column="corresponding_file_label"/>
+            <result property="correspondingFileName" column="corresponding_file_name"/>
+            <result property="remark" column="remark"/>
+            <result property="createBy" column="create_by"/>
+            <result property="createTime" column="create_time"/>
+            <result property="updateBy" column="update_by"/>
+            <result property="updateTime" column="update_time"/>
+            <result property="isValid" column="is_valid"/>
+    </resultMap>
+
+    <sql id="selectExamWordTemplateInfoVo">
+        select id, form_id, form_name, store_info_id, word_template_name, word_template_type, corresponding_file_label, corresponding_file_name, remark, create_by, create_time, update_by, update_time, is_valid
+        from exam_word_template_info
+    </sql>
+
+    <select id="selectExamWordTemplateInfoList" parameterType="ExamWordTemplateInfo" resultMap="ExamWordTemplateInfoResult">
+        <include refid="selectExamWordTemplateInfoVo"/>
+        <where>
+                        <if test="formId != null ">
+                            and form_id = #{formId}
+                        </if>
+                        <if test="formName != null  and formName != ''">
+                            and form_name like concat('%', #{formName}, '%')
+                        </if>
+                        <if test="storeInfoId != null ">
+                            and store_info_id = #{storeInfoId}
+                        </if>
+                        <if test="wordTemplateName != null  and wordTemplateName != ''">
+                            and word_template_name like concat('%', #{wordTemplateName}, '%')
+                        </if>
+                        <if test="wordTemplateType != null  and wordTemplateType != ''">
+                            and word_template_type = #{wordTemplateType}
+                        </if>
+                        <if test="correspondingFileLabel != null  and correspondingFileLabel != ''">
+                            and corresponding_file_label = #{correspondingFileLabel}
+                        </if>
+                        <if test="correspondingFileName != null  and correspondingFileName != ''">
+                            and corresponding_file_name like concat('%', #{correspondingFileName}, '%')
+                        </if>
+                        <if test="remark != null  and remark != ''">
+                            and remark = #{remark}
+                        </if>
+                        <if test="isValid != null ">
+                            and is_valid = #{isValid}
+                        </if>
+            and is_valid = 0
+        </where>
+    </select>
+
+    <select id="selectExamWordTemplateInfoById" parameterType="Long"
+            resultMap="ExamWordTemplateInfoResult">
+            <include refid="selectExamWordTemplateInfoVo"/>
+            where id = #{id} and is_valid = 0
+    </select>
+
+    <insert id="insertExamWordTemplateInfo" parameterType="ExamWordTemplateInfo" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into exam_word_template_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="formId != null">form_id,
+                    </if>
+                    <if test="formName != null">form_name,
+                    </if>
+                    <if test="storeInfoId != null">store_info_id,
+                    </if>
+                    <if test="wordTemplateName != null">word_template_name,
+                    </if>
+                    <if test="wordTemplateType != null">word_template_type,
+                    </if>
+                    <if test="correspondingFileLabel != null">corresponding_file_label,
+                    </if>
+                    <if test="correspondingFileName != null">corresponding_file_name,
+                    </if>
+                    <if test="remark != null">remark,
+                    </if>
+                    <if test="createBy != null">create_by,
+                    </if>
+                    <if test="createTime != null">create_time,
+                    </if>
+                    <if test="updateBy != null">update_by,
+                    </if>
+                    <if test="updateTime != null">update_time,
+                    </if>
+                    <if test="isValid != null">is_valid,
+                    </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="formId != null">#{formId},
+                    </if>
+                    <if test="formName != null">#{formName},
+                    </if>
+                    <if test="storeInfoId != null">#{storeInfoId},
+                    </if>
+                    <if test="wordTemplateName != null">#{wordTemplateName},
+                    </if>
+                    <if test="wordTemplateType != null">#{wordTemplateType},
+                    </if>
+                    <if test="correspondingFileLabel != null">#{correspondingFileLabel},
+                    </if>
+                    <if test="correspondingFileName != null">#{correspondingFileName},
+                    </if>
+                    <if test="remark != null">#{remark},
+                    </if>
+                    <if test="createBy != null">#{createBy},
+                    </if>
+                    <if test="createTime != null">#{createTime},
+                    </if>
+                    <if test="updateBy != null">#{updateBy},
+                    </if>
+                    <if test="updateTime != null">#{updateTime},
+                    </if>
+                    <if test="isValid != null">#{isValid},
+                    </if>
+        </trim>
+    </insert>
+
+    <update id="updateExamWordTemplateInfo" parameterType="ExamWordTemplateInfo">
+        update exam_word_template_info
+        <trim prefix="SET" suffixOverrides=",">
+                    <if test="formId != null">form_id =
+                        #{formId},
+                    </if>
+                    <if test="formName != null">form_name =
+                        #{formName},
+                    </if>
+                    <if test="storeInfoId != null">store_info_id =
+                        #{storeInfoId},
+                    </if>
+                    <if test="wordTemplateName != null">word_template_name =
+                        #{wordTemplateName},
+                    </if>
+                    <if test="wordTemplateType != null">word_template_type =
+                        #{wordTemplateType},
+                    </if>
+                    <if test="correspondingFileLabel != null">corresponding_file_label =
+                        #{correspondingFileLabel},
+                    </if>
+                    <if test="correspondingFileName != null">corresponding_file_name =
+                        #{correspondingFileName},
+                    </if>
+                    <if test="remark != null">remark =
+                        #{remark},
+                    </if>
+                    <if test="createBy != null">create_by =
+                        #{createBy},
+                    </if>
+                    <if test="createTime != null">create_time =
+                        #{createTime},
+                    </if>
+                    <if test="updateBy != null">update_by =
+                        #{updateBy},
+                    </if>
+                    <if test="updateTime != null">update_time =
+                        #{updateTime},
+                    </if>
+                    <if test="isValid != null">is_valid =
+                        #{isValid},
+                    </if>
+        </trim>
+        where id = #{id} and is_valid = 0
+    </update>
+
+    <delete id="deleteExamWordTemplateInfoById" parameterType="Long">
+        update exam_word_template_info set `is_valid` = 1 where id = #{id}
+    </delete>
+
+    <delete id="deleteExamWordTemplateInfoByIds" parameterType="String">
+        delete from exam_word_template_info where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

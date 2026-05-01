@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.xzit.core.dao.mapper.ExamTeachingResearchOfficeUserMapper">
+
+    <select id="selectUsersByOfficeId" parameterType="long" resultType="SysUser">
+        select u.user_id as userId, u.user_name as userName, u.nick_name as nickName
+        from sys_user u
+        inner join exam_teaching_research_office_user r on r.user_id = u.user_id
+        where r.teaching_research_office_id = #{officeId}
+    </select>
+
+    <insert id="insertUsers">
+        insert into exam_teaching_research_office_user (teaching_research_office_id, user_id, create_time)
+        values
+        <foreach collection="userIds" item="uid" separator=",">
+            (#{officeId}, #{uid}, now())
+        </foreach>
+    </insert>
+
+    <delete id="deleteUsers">
+        delete from exam_teaching_research_office_user
+        where teaching_research_office_id = #{officeId}
+          and user_id in
+        <foreach collection="userIds" item="uid" open="(" separator="," close=")">
+            #{uid}
+        </foreach>
+    </delete>
+
+    <select id="selectOfficeIdsByUserId" parameterType="long" resultType="long">
+        select teaching_research_office_id
+        from exam_teaching_research_office_user
+        where user_id = #{userId}
+    </select>
+</mapper>

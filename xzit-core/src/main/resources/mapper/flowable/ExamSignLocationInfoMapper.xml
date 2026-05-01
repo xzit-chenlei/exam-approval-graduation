@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.xzit.core.core.flowable.mapper.ExamSignLocationInfoMapper">
+
+    <resultMap type="ExamSignLocationInfo" id="ExamSignLocationInfoResult">
+            <result property="id" column="id"/>
+            <result property="formId" column="form_id"/>
+            <result property="formName" column="form_name"/>
+            <result property="signerId" column="signer_id"/>
+            <result property="signerName" column="signer_name"/>
+            <result property="signatureLocation" column="signature_location"/>
+            <result property="remark" column="remark"/>
+            <result property="createBy" column="create_by"/>
+            <result property="createTime" column="create_time"/>
+            <result property="updateBy" column="update_by"/>
+            <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectExamSignLocationInfoVo">
+        select id, form_id, form_name, signer_id, signer_name, signature_location, remark, create_by, create_time, update_by, update_time
+        from exam_sign_location_info
+    </sql>
+
+    <select id="selectExamSignLocationInfoList" parameterType="ExamSignLocationInfo" resultMap="ExamSignLocationInfoResult">
+        <include refid="selectExamSignLocationInfoVo"/>
+        <where>
+                        <if test="formId != null ">
+                            and form_id = #{formId}
+                        </if>
+                        <if test="formName != null  and formName != ''">
+                            and form_name like concat('%', #{formName}, '%')
+                        </if>
+                        <if test="signerId != null ">
+                            and signer_id = #{signerId}
+                        </if>
+                        <if test="signerName != null  and signerName != ''">
+                            and signer_name like concat('%', #{signerName}, '%')
+                        </if>
+                        <if test="signatureLocation != null  and signatureLocation != ''">
+                            and signature_location = #{signatureLocation}
+                        </if>
+            and is_valid = 0
+        </where>
+    </select>
+
+    <select id="selectExamSignLocationInfoById" parameterType="Long"
+            resultMap="ExamSignLocationInfoResult">
+            <include refid="selectExamSignLocationInfoVo"/>
+            where id = #{id} and is_valid = 0
+    </select>
+
+    <insert id="insertExamSignLocationInfo" parameterType="ExamSignLocationInfo">
+        insert into exam_sign_location_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="id != null">id,
+                    </if>
+                    <if test="formId != null">form_id,
+                    </if>
+                    <if test="formName != null">form_name,
+                    </if>
+                    <if test="signerId != null">signer_id,
+                    </if>
+                    <if test="signerName != null">signer_name,
+                    </if>
+                    <if test="signatureLocation != null">signature_location,
+                    </if>
+                    <if test="remark != null">remark,
+                    </if>
+                    <if test="createBy != null">create_by,
+                    </if>
+                    <if test="createTime != null">create_time,
+                    </if>
+                    <if test="updateBy != null">update_by,
+                    </if>
+                    <if test="updateTime != null">update_time,
+                    </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="id != null">#{id},
+                    </if>
+                    <if test="formId != null">#{formId},
+                    </if>
+                    <if test="formName != null">#{formName},
+                    </if>
+                    <if test="signerId != null">#{signerId},
+                    </if>
+                    <if test="signerName != null">#{signerName},
+                    </if>
+                    <if test="signatureLocation != null">#{signatureLocation},
+                    </if>
+                    <if test="remark != null">#{remark},
+                    </if>
+                    <if test="createBy != null">#{createBy},
+                    </if>
+                    <if test="createTime != null">#{createTime},
+                    </if>
+                    <if test="updateBy != null">#{updateBy},
+                    </if>
+                    <if test="updateTime != null">#{updateTime},
+                    </if>
+        </trim>
+    </insert>
+
+    <update id="updateExamSignLocationInfo" parameterType="ExamSignLocationInfo">
+        update exam_sign_location_info
+        <trim prefix="SET" suffixOverrides=",">
+                    <if test="formId != null">form_id =
+                        #{formId},
+                    </if>
+                    <if test="formName != null">form_name =
+                        #{formName},
+                    </if>
+                    <if test="signerId != null">signer_id =
+                        #{signerId},
+                    </if>
+                    <if test="signerName != null">signer_name =
+                        #{signerName},
+                    </if>
+                    <if test="signatureLocation != null">signature_location =
+                        #{signatureLocation},
+                    </if>
+                    <if test="remark != null">remark =
+                        #{remark},
+                    </if>
+                    <if test="createBy != null">create_by =
+                        #{createBy},
+                    </if>
+                    <if test="createTime != null">create_time =
+                        #{createTime},
+                    </if>
+                    <if test="updateBy != null">update_by =
+                        #{updateBy},
+                    </if>
+                    <if test="updateTime != null">update_time =
+                        #{updateTime},
+                    </if>
+        </trim>
+        where id = #{id} and is_valid = 0
+    </update>
+
+    <delete id="deleteExamSignLocationInfoById" parameterType="Long">
+        update exam_sign_location_info set `is_valid` = 1 where id = #{id}
+    </delete>
+
+    <delete id="deleteExamSignLocationInfoByIds" parameterType="String">
+        delete from exam_sign_location_info where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

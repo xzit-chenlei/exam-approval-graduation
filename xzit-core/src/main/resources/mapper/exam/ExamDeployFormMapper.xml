@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.xzit.core.dao.mapper.ExamDeployFormMapper">
+    
+    <resultMap type="ExamDeployForm" id="ExamDeployFormResult">
+        <result property="id"    column="id"    />
+        <result property="formId"    column="form_id"    />
+        <result property="deployId"    column="deploy_id"    />
+    </resultMap>
+
+    <sql id="selectExamDeployFormVo">
+        select id, form_id, deploy_id from exam_deploy_form
+    </sql>
+
+    <select id="selectExamDeployFormList" parameterType="ExamDeployForm" resultMap="ExamDeployFormResult">
+        <include refid="selectExamDeployFormVo"/>
+        <where>  
+            <if test="formId != null "> and form_id = #{formId}</if>
+            <if test="deployId != null  and deployId != ''"> and deploy_id = #{deployId}</if>
+        </where>
+    </select>
+    
+    <select id="selectExamDeployFormById" parameterType="Long" resultMap="ExamDeployFormResult">
+        <include refid="selectExamDeployFormVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectExamDeployFormByDeployId" resultType="ExamForm">
+        select t1.id as id, t1.name as name, t1.module_ids as moduleIds, t1.remark as remark from exam_form t1 left join exam_deploy_form t2 on t1.id = t2.form_id
+        where t2.deploy_id = #{deployId} limit 1
+    </select>
+
+    <insert id="insertExamDeployForm" parameterType="ExamDeployForm" useGeneratedKeys="true" keyProperty="id">
+        insert into exam_deploy_form
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="formId != null">form_id,</if>
+            <if test="deployId != null">deploy_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="formId != null">#{formId},</if>
+            <if test="deployId != null">#{deployId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateExamDeployForm" parameterType="ExamDeployForm">
+        update exam_deploy_form
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="formId != null">form_id = #{formId},</if>
+            <if test="deployId != null">deploy_id = #{deployId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteExamDeployFormById" parameterType="Long">
+        delete from exam_deploy_form where id = #{id}
+    </delete>
+
+    <delete id="deleteExamDeployFormByIds" parameterType="String">
+        delete from exam_deploy_form where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
+
