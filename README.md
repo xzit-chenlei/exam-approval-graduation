@@ -8,16 +8,16 @@
 
 部分复杂表格单出行列配置，并拆成多个模版。
 
-![动态表单配置页面](image1.png)
+![动态表单配置页面](./doc/image1.png)
 *图表 1 - 动态表单配置页面*
 
-![模版配置](image2.png)
+![模版配置](./doc/image2.png)
 *图表 2 - 模版配置*
 
-![表单页面](image3.png)
+![表单页面](./doc/image3.png)
 *图表 3 - 表单页面*
 
-![任务完成后的状态](image4.png)
+![任务完成后的状态](./doc/image4.png)
 *图表 4 - 任务完成后的状态*
 
 ---
@@ -126,16 +126,16 @@ java -jar xzit-starter/target/xzit-starter.jar --spring.profiles.active=qa
 
 目前 v3 只完成了**课程评价达成报告**的导出，其他流程暂未开发。
 
-![v3 管理页面](image5.png)
+![v3 管理页面](./doc/image5.png)
 *图表 5 - v3 管理页面*
 
-![达成评价报告 1](image6.png)
+![达成评价报告 1](./doc/image6.png)
 *图表 6 - 达成评价报告 1*
 
-![达成评价报告 2](image7.png)
+![达成评价报告 2](./doc/image7.png)
 *图表 7 - 达成评价报告 2*
 
-![达成评价报告 3](image8.png)
+![达成评价报告 3](./doc/image8.png)
 *图表 8 - 达成评价报告 3*
 
 ---
