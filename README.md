@@ -98,3 +98,7 @@
 - word导出
 - 达成度数据统计
 
+## 开源许可
+
+本项目采用 **Apache License 2.0**，完整条款见仓库根目录 [`LICENSE`](LICENSE)。欢迎参与贡献，请先阅读 [`CONTRIBUTING.md`](CONTRIBUTING.md)。
+
