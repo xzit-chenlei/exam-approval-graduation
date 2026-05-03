@@ -19,6 +19,31 @@
 
 ## 快速开始
 
+### 1. 导入数据库
+
+将项目中的 SQL 导入到你的 MySQL（例如执行根目录 `sql/all.sql`，库名需与 JDBC 一致，默认 **`exam`**）。  
+另有一份按 Flyway 版本约定命名的基线脚本预放在 **`xzit-starter/src/main/resources/db/migration/V0.0.1__Baseline.sql`**，便于日后接入 Flyway 时直接使用（当前工程未引入 Flyway 依赖，不会自动执行）。
+
+### 2. 修改配置
+
+主要涉及 **`xzit-starter/src/main/resources/application-dev.yml`**（开发）或 **`application-prod.yml`**（生产）；通用项在 **`application.yml`**。
+
+| 能力 | 修改位置（示例） |
+|------|------------------|
+| **MySQL** | `spring.datasource.druid.master.url` / `username` / `password`；或使用环境变量 **`DB_MASTER_USERNAME`**、**`DB_MASTER_PASSWORD`**（密码建议走环境变量） |
+| **Redis** | `spring.redis.host`、`port`、`database`、`password`；密码可用 **`REDIS_PASSWORD`** |
+| **阿里云 OSS** | `application.yml` 中 `aliyun.oss.endpoint`、`aliyun.oss.bucket-name`；密钥对应 **`ALIYUN_ACCESS_KEY_ID`**、**`ALIYUN_ACCESS_KEY_SECRET`**（或在本机 yml 中配置 `aliyun.access-key-id` / `aliyun.access-key-secret`，勿提交仓库） |
+| **令牌** | `token.secret`，或使用 **`TOKEN_SECRET`** |
+| **服务端口** | `application.yml` 中 `server.port`（默认 `8080`） |
+
+按需调整 **`ruoyi.profile`**（本地文件路径）、Druid 控制台账号等，见对应 yml 注释。
+
+### 3. 部署方式
+
+- **本机 / 调试**：项目根目录执行 `make run`（先 `package` 再 `java -jar`，默认 `dev`）。指定环境：`make run PROFILE=prod`。
+- **等价命令**：`mvn clean package -DskipTests` 后执行  
+  `java -jar xzit-starter/target/exam-back.jar --spring.profiles.active=dev`  
+  生产请将 `dev` 换成实际 profile，并通过环境变量注入敏感配置。
 
 ## 依赖环境
 
