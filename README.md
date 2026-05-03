@@ -21,8 +21,7 @@
 
 ### 1. 导入数据库
 
-将项目中的 SQL 导入到你的 MySQL（例如执行根目录 `sql/all.sql`，库名需与 JDBC 一致，默认 **`exam`**）。  
-另有一份按 Flyway 版本约定命名的基线脚本预放在 **`xzit-starter/src/main/resources/db/migration/V0.0.1__Baseline.sql`**，便于日后接入 Flyway 时直接使用（当前工程未引入 Flyway 依赖，不会自动执行）。
+将项目中的 SQL 导入到你的 MySQL：在目标库（库名需与 JDBC 一致，默认 **`exam`**）中执行 **`xzit-starter/src/main/resources/db/migration/V0.0.1__Baseline.sql`**。该文件按 Flyway 版本约定命名并放在 `db/migration` 下，便于日后接入 Flyway 时直接使用（当前工程未引入 Flyway 依赖，不会自动执行）。
 
 ### 2. 修改配置
 
