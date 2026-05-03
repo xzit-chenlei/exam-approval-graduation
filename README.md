@@ -44,6 +44,10 @@
   `java -jar xzit-starter/target/exam-back.jar --spring.profiles.active=dev`  
   生产请将 `dev` 换成实际 profile，并通过环境变量注入敏感配置。
 
+> 默认管理员账户：admin
+> 
+> 默认管理员账户密码：admin123
+
 ## 依赖环境
 
 建议使用以下版本（与项目当前依赖保持一致）：
