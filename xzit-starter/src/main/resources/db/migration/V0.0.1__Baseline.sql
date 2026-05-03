@@ -6865,7 +6865,7 @@ INSERT INTO `sys_user` (`user_id`, `dept_id`, `user_name`, `nick_name`, `user_ty
                         `avatar`, `password`, `status`, `del_flag`, `login_ip`, `login_date`, `create_by`,
                         `create_time`, `update_by`, `update_time`, `remark`)
 VALUES (1, NULL, 'admin', '若依', '00', 'ry@163.com', '15888888888', '0', '',
-        '$2a$10$4cWUkfGb5PqnuxsLXT0Sh.AHg8t2gMlBwvYzaI0FIwIhxAxo4ZreS', '0', '0', '127.0.0.1', '2026-05-01 18:07:07',
+        '$2a$10$muf4OsoZHKQOoeeld.5iAuTyM3epv8yR.9CA2bUCCVCl7lN3Xduiq', '0', '0', '127.0.0.1', '2026-05-01 18:07:07',
         'admin', '2025-02-01 22:37:05', 'admin', '2026-05-01 18:07:06', '管理员');
 COMMIT;
 
